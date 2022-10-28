@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, createRef } from "react";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import Select from "react-select";
 import Create from "./Create";
 import Update from "./Update";
@@ -23,6 +22,8 @@ const managementTypes = [
 const Clients = () => {
   //client management type
   const [type, setType] = useState(NONE);
+  const selectRef = createRef();
+
   return (
     <div className="centered">
       <h3 className="mb-5 fw-light">Clients Management</h3>
@@ -37,15 +38,16 @@ const Clients = () => {
                   options={managementTypes}
                   placeholder="Select a type..."
                   onChange={(e) => setType(e.value)}
+                  ref={selectRef}
                 />
               </Form.Group>
             </Col>
           </Row>
         </Container>
+        {type === CREATE && <Create setType={setType} selectRef={selectRef} />}
+        {type === UPDATE && <Update setType={setType} selectRef={selectRef} />}
+        {type === DELETE && <Delete setType={setType} selectRef={selectRef} />}
       </Form>
-      {type === CREATE && <Create />}
-      {type === UPDATE && <Update />}
-      {type === DELETE && <Delete />}
     </div>
   );
 };
