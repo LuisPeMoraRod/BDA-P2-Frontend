@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { filesActions } from "./store/slices/files/files";
 import { fetchProducts } from "./store/slices/products/actions";
 import { fetchClients } from "./store/slices/clients/actions";
+import { fetchBrands } from "./store/slices/brands/actions";
 
 const Pages = () => {
   return (
@@ -42,6 +43,7 @@ function App() {
     if (areFilesLoaded) {
       dispatch(fetchClients());
       dispatch(fetchProducts());
+      dispatch(fetchBrands());
     }
   }, [areFilesLoaded]);
   return (

@@ -6,8 +6,11 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useSelector } from "react-redux";
+import { updateClient } from "../../store/slices/clients/actions";
+import { useDispatch } from "react-redux";
 
 const Update = ({ setType, selectRef }) => {
+  const dispatch = useDispatch();
   const clientOptions = useSelector((state) => state.clients.clients);
 
   const [clientId, setClientId] = useState("");
@@ -15,9 +18,11 @@ const Update = ({ setType, selectRef }) => {
   const [lastName, setLastName] = useState("");
 
   const sendUpdatedClient = () => {
+    dispatch(
+      updateClient({ id: clientId, first_name: name, last_name: lastName })
+    );
     setType(0);
     selectRef.current.setValue("");
-    console.log(clientId);
   };
 
   return (
@@ -32,7 +37,11 @@ const Update = ({ setType, selectRef }) => {
                 options={clientOptions}
                 placeholder="Type name here..."
                 onChange={(e) => {
-                  if (e.length > 0) setClientId(e[0].id);
+                  if (e.length > 0) {
+                    setClientId(e[0].id);
+                    setName(e[0].first_name);
+                    setLastName(e[0].last_name);
+                  }
                 }}
               />
             </Form.Group>
@@ -49,6 +58,7 @@ const Update = ({ setType, selectRef }) => {
                 rows={1}
                 placeholder="Type the name here..."
                 onChange={(e) => setName(e.target.value)}
+                defaultValue={name}
               />
             </Form.Group>
           </Col>
@@ -60,6 +70,7 @@ const Update = ({ setType, selectRef }) => {
                 rows={1}
                 placeholder="Type the last name here..."
                 onChange={(e) => setLastName(e.target.value)}
+                defaultValue={lastName}
               />
             </Form.Group>
           </Col>
