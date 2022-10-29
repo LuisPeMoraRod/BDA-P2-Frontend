@@ -3,6 +3,7 @@ import {
   getProducts,
   postProduct,
   putProduct,
+  deleteProduct,
 } from "../../../services/api.products";
 
 const parseProducts = (products) => {
@@ -62,6 +63,26 @@ export const updateProduct = (product) => {
 
       products = parseProducts(products);
       dispatch(productsActions.setProducts(products)); //update product
+      dispatch(productsActions.setTotal(products.length));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const removeProduct = (productId) => {
+  return async (dispatch) => {
+    try {
+      let response;
+      response = await deleteProduct(productId);
+      if (!response.ok) throw new Error("Couldn't delete product");
+
+      response = await getProducts();
+      if (!response.ok) throw new Error("Couldn't fetch products data");
+      let products = await response.json();
+
+      products = parseProducts(products);
+      dispatch(productsActions.setProducts(products)); //update products
       dispatch(productsActions.setTotal(products.length));
     } catch (error) {
       console.log(error);

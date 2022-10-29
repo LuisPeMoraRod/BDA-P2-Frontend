@@ -6,15 +6,18 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useSelector } from "react-redux";
+import { removeClient } from "../../store/slices/clients/actions";
+import { useDispatch } from "react-redux";
 
 const Delete = ({ setType, selectRef }) => {
+  const dispatch = useDispatch();
   const clientOptions = useSelector((state) => state.clients.clients);
   const [clientId, setClientId] = useState("");
 
   const deleteClient = () => {
+    dispatch(removeClient(clientId));
     setType(0);
     selectRef.current.setValue("");
-    console.log(clientId);
   };
   return (
     <>

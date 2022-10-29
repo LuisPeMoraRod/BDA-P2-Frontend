@@ -45,3 +45,15 @@ export const putProduct = async (product) => {
       throw new Error(error);
     });
 };
+
+export const deleteProduct = async (productId) => {
+  const options = {
+    method: "DELETE",
+  };
+
+  return fetch(config.resources.products.concat(`/${productId}`), options)
+    .then((response) => response)
+    .catch((error) => {
+      throw new Error(error);
+    });
+};

@@ -45,3 +45,15 @@ export const putClient = async (client) => {
       throw new Error(error);
     });
 };
+
+export const deleteClient = async (clientId) => {
+  const options = {
+    method: "DELETE",
+  };
+
+  return fetch(config.resources.clients.concat(`/${clientId}`), options)
+    .then((response) => response)
+    .catch((error) => {
+      throw new Error(error);
+    });
+};

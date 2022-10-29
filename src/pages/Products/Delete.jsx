@@ -6,15 +6,18 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useSelector } from "react-redux";
+import { removeProduct } from "../../store/slices/products/actions";
+import { useDispatch } from "react-redux";
 
 const Delete = ({ setType, selectRef }) => {
+  const dispatch = useDispatch();
   const productsOptions = useSelector((state) => state.products.products);
   const [productId, setProductId] = useState("");
 
   const deleteProduct = () => {
+    dispatch(removeProduct(productId));
     setType(0);
     selectRef.current.setValue("");
-    console.log(productId);
   };
   return (
     <>
