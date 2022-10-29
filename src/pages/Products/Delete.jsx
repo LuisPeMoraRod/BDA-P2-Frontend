@@ -8,27 +8,27 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { useSelector } from "react-redux";
 
 const Delete = ({ setType, selectRef }) => {
-  const clientOptions = useSelector((state) => state.clients.clients);
-  const [clientId, setClientId] = useState("");
+  const productsOptions = useSelector((state) => state.products.products);
+  const [productId, setProductId] = useState("");
 
-  const deleteClient = () => {
+  const deleteProduct = () => {
     setType(0);
     selectRef.current.setValue("");
-    console.log(clientId);
+    console.log(productId);
   };
   return (
     <>
       <Container>
         <Row>
           <Col>
-            <Form.Group className="mb-3" controlId="client">
-              <Form.Label>Select client to be deleted</Form.Label>
+            <Form.Group className="mb-3" controlId="product">
+              <Form.Label>Select product to be deleted</Form.Label>
               <Typeahead
-                id="client"
-                options={clientOptions}
-                placeholder="Type name here..."
+                id="product"
+                options={productsOptions}
+                placeholder="Type product here..."
                 onChange={(e) => {
-                  if (e.length > 0) setClientId(e[0].id);
+                  if (e.length > 0) setProductId(e[0].id);
                 }}
               />
             </Form.Group>
@@ -38,7 +38,7 @@ const Delete = ({ setType, selectRef }) => {
       <Container className="bottom-container">
         <Button
           variant="outline-primary"
-          onClick={deleteClient}
+          onClick={deleteProduct}
           className="mt-3 mr-3"
         >
           Delete

@@ -8,16 +8,17 @@ import { Typeahead } from "react-bootstrap-typeahead";
 import { useSelector } from "react-redux";
 
 const Update = ({ setType, selectRef }) => {
-  const clientOptions = useSelector((state) => state.clients.clients);
+  const productsOptions = useSelector((state) => state.products.products);
 
-  const [clientId, setClientId] = useState("");
+  const [productId, setProductId] = useState("");
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [brandId, setBrandId] = useState("");
+  const [price, setPrice] = useState(0);
 
-  const sendUpdatedClient = () => {
+  const sendUpdatedProduct = () => {
     setType(0);
     selectRef.current.setValue("");
-    console.log(clientId);
+    console.log(productId);
   };
 
   return (
@@ -26,13 +27,13 @@ const Update = ({ setType, selectRef }) => {
         <Row>
           <Col>
             <Form.Group className="mb-3" controlId="client">
-              <Form.Label>Select client to be updated</Form.Label>
+              <Form.Label>Select product to be updated</Form.Label>
               <Typeahead
                 id="client"
-                options={clientOptions}
-                placeholder="Type name here..."
+                options={productsOptions}
+                placeholder="Type product here..."
                 onChange={(e) => {
-                  if (e.length > 0) setClientId(e[0].id);
+                  if (e.length > 0) setProductId(e[0].id);
                 }}
               />
             </Form.Group>
@@ -43,7 +44,7 @@ const Update = ({ setType, selectRef }) => {
         <Row>
           <Col>
             <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Client's new name</Form.Label>
+              <Form.Label>Products's new name</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={1}
@@ -53,13 +54,24 @@ const Update = ({ setType, selectRef }) => {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="mb-3" controlId="lastName">
-              <Form.Label>Client's new last name</Form.Label>
+            <Form.Group className="mb-3" controlId="brandId">
+              <Form.Label>Product's new brand</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={1}
-                placeholder="Type the last name here..."
-                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Type the brand name here..."
+                onChange={(e) => setBrandId(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="price">
+              <Form.Label>Product's new price</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={1}
+                placeholder="Type the price here..."
+                onChange={(e) => setPrice(e.target.value)}
               />
             </Form.Group>
           </Col>
@@ -68,7 +80,7 @@ const Update = ({ setType, selectRef }) => {
       <Container className="bottom-container">
         <Button
           variant="outline-primary"
-          onClick={sendUpdatedClient}
+          onClick={sendUpdatedProduct}
           className="mt-3 mr-3"
         >
           Update

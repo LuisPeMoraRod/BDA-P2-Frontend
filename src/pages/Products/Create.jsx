@@ -7,9 +7,10 @@ import Button from "react-bootstrap/Button";
 
 const Create = ({ setType, selectRef }) => {
   const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [brandId, setBrandId] = useState("");
+  const [price, setPrice] = useState(0);
 
-  const sendNewClient = () => {
+  const sendNewProduct = () => {
     setType(0);
     selectRef.current.setValue("");
     console.log("sending...");
@@ -21,7 +22,7 @@ const Create = ({ setType, selectRef }) => {
         <Row>
           <Col>
             <Form.Group className="mb-3" controlId="name">
-              <Form.Label>New client's name</Form.Label>
+              <Form.Label>New product's name</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={1}
@@ -31,13 +32,24 @@ const Create = ({ setType, selectRef }) => {
             </Form.Group>
           </Col>
           <Col>
-            <Form.Group className="mb-3" controlId="lastName">
-              <Form.Label>New client's last name</Form.Label>
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>New product's brand</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={1}
-                placeholder="Type the last name here..."
-                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Type the brand here..."
+                onChange={(e) => setBrandId(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="lastName">
+              <Form.Label>New products's price</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={1}
+                placeholder="Type the price here..."
+                onChange={(e) => setPrice(e.target.value)}
               />
             </Form.Group>
           </Col>
@@ -46,7 +58,7 @@ const Create = ({ setType, selectRef }) => {
       <Container className="bottom-container">
         <Button
           variant="outline-primary"
-          onClick={sendNewClient}
+          onClick={sendNewProduct}
           className="mt-3 mr-3"
         >
           Send

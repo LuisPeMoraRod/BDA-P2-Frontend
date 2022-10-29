@@ -1,13 +1,16 @@
-import logo from './logo.svg';
-import './App.scss';
-import Layout from './components/Layout/Layout';
+import "./App.scss";
+import Layout from "./components/Layout/Layout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import DataLoad from './pages/DataLoad/DataLoad';
-import Clients from './pages/Clients/Clients';
-import Products from './pages/Products/Products';
-import Purchases from './pages/Purchases/Purchases';
-import Queries from './pages/Queries/Queries';
-
+import DataLoad from "./pages/DataLoad/DataLoad";
+import Clients from "./pages/Clients/Clients";
+import Products from "./pages/Products/Products";
+import Purchases from "./pages/Purchases/Purchases";
+import Queries from "./pages/Queries/Queries";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { filesActions } from "./store/slices/files/files";
+import { fetchProducts } from "./store/slices/products/actions";
+import { fetchClients } from "./store/slices/clients/actions";
 
 const Pages = () => {
   return (
@@ -21,10 +24,26 @@ const Pages = () => {
         <Route path="queries" element={<Queries />} />
       </Route>
     </Routes>
-  )
+  );
 };
 
 function App() {
+  const areFilesLoaded = useSelector((state) => state.files.loaded);
+
+  const dispatch = useDispatch();
+
+  //isLoaded flag must be setted only after files are sent
+  useEffect(() => {
+    if (!areFilesLoaded) dispatch(filesActions.setLoaded(true));
+  }, []);
+
+  //Get catalogs data from API only after files are sent
+  useEffect(() => {
+    if (areFilesLoaded) {
+      dispatch(fetchClients());
+      dispatch(fetchProducts());
+    }
+  }, [areFilesLoaded]);
   return (
     <Router>
       <Layout>
