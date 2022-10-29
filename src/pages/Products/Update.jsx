@@ -6,8 +6,11 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { useSelector } from "react-redux";
+import { updateProduct } from "../../store/slices/products/actions";
+import { useDispatch } from "react-redux";
 
 const Update = ({ setType, selectRef }) => {
+  const dispatch = useDispatch();
   const productsOptions = useSelector((state) => state.products.products);
   const brandsOptions = useSelector((state) => state.brands.brands);
 
@@ -17,9 +20,16 @@ const Update = ({ setType, selectRef }) => {
   const [price, setPrice] = useState(0);
 
   const sendUpdatedProduct = () => {
+    dispatch(
+      updateProduct({
+        id: productId,
+        nombre: name,
+        marca: brand,
+        precio: price,
+      })
+    );
     setType(0);
     selectRef.current.setValue("");
-    console.log(productId);
   };
 
   return (

@@ -1,5 +1,9 @@
 import { clientsActions } from "./clients";
-import { getClients, postClient } from "../../../services/api.clients";
+import {
+  getClients,
+  postClient,
+  putClient,
+} from "../../../services/api.clients";
 
 const parseClients = (clients) => {
   return clients.map((client) => {
@@ -31,6 +35,26 @@ export const createClient = (client) => {
       let response;
       response = await postClient(client);
       if (!response.ok) throw new Error("Couldn't create new client");
+
+      response = await getClients();
+      if (!response.ok) throw new Error("Couldn't fetch clients data");
+      let clients = await response.json();
+
+      clients = parseClients(clients);
+      dispatch(clientsActions.setClients(clients)); //update clients
+      dispatch(clientsActions.setTotal(clients.length));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateClient = (client) => {
+  return async (dispatch) => {
+    try {
+      let response;
+      response = await putClient(client);
+      if (!response.ok) throw new Error("Couldn't update client");
 
       response = await getClients();
       if (!response.ok) throw new Error("Couldn't fetch clients data");

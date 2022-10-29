@@ -28,3 +28,20 @@ export const postClient = async (client) => {
       throw new Error(error);
     });
 };
+
+export const putClient = async (client) => {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+
+  const options = {
+    method: "PUT",
+    headers: headers,
+    body: JSON.stringify(client),
+  };
+
+  return fetch(config.resources.clients.concat(`/${client.id}`), options)
+    .then((response) => response)
+    .catch((error) => {
+      throw new Error(error);
+    });
+};
