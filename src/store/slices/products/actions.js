@@ -2,7 +2,7 @@ import { productsActions } from "./products";
 
 const PRODUCTS = [
   { id: 1, nombre: "Crush - Orange, 355ml", marca: "Skim", precio: "144" },
-  { id: 1, nombre: "Potatoes - Mini Red", marca: "Eazzy", precio: "252" },
+  { id: 2, nombre: "Potatoes - Mini Red", marca: "Eazzy", precio: "252" },
 ];
 
 const parseProducts = (products) => {
