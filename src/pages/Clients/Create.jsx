@@ -4,15 +4,22 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { useSelector } from "react-redux";
+import { createClient } from "../../store/slices/clients/actions";
+import { useDispatch } from "react-redux";
 
 const Create = ({ setType, selectRef }) => {
+  const dispatch = useDispatch();
+  const total = useSelector((state) => state.clients.total);
+  const id = total + 1;
+
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
 
   const sendNewClient = () => {
+    dispatch(createClient({ id: id, first_name: name, last_name: lastName })); //post new client
     setType(0);
     selectRef.current.setValue("");
-    console.log("sending...");
   };
 
   return (

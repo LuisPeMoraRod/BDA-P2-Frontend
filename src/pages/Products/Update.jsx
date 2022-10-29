@@ -9,10 +9,11 @@ import { useSelector } from "react-redux";
 
 const Update = ({ setType, selectRef }) => {
   const productsOptions = useSelector((state) => state.products.products);
+  const brandsOptions = useSelector((state) => state.brands.brands);
 
   const [productId, setProductId] = useState("");
   const [name, setName] = useState("");
-  const [brandId, setBrandId] = useState("");
+  const [brand, setBrand] = useState("");
   const [price, setPrice] = useState(0);
 
   const sendUpdatedProduct = () => {
@@ -33,7 +34,12 @@ const Update = ({ setType, selectRef }) => {
                 options={productsOptions}
                 placeholder="Type product here..."
                 onChange={(e) => {
-                  if (e.length > 0) setProductId(e[0].id);
+                  if (e.length > 0) {
+                    setProductId(e[0].id);
+                    setName(e[0].nombre);
+                    setBrand(e[0].marca);
+                    setPrice(e[0].precio);
+                  }
                 }}
               />
             </Form.Group>
@@ -50,17 +56,20 @@ const Update = ({ setType, selectRef }) => {
                 rows={1}
                 placeholder="Type the name here..."
                 onChange={(e) => setName(e.target.value)}
+                defaultValue={name}
               />
             </Form.Group>
           </Col>
           <Col>
             <Form.Group className="mb-3" controlId="brandId">
               <Form.Label>Product's new brand</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={1}
-                placeholder="Type the brand name here..."
-                onChange={(e) => setBrandId(e.target.value)}
+              <Typeahead
+                id="brand"
+                options={brandsOptions}
+                placeholder="Type brand here..."
+                onChange={(e) => {
+                  if (e.length > 0) setBrand(e[0].nombre);
+                }}
               />
             </Form.Group>
           </Col>
@@ -72,6 +81,7 @@ const Update = ({ setType, selectRef }) => {
                 rows={1}
                 placeholder="Type the price here..."
                 onChange={(e) => setPrice(e.target.value)}
+                defaultValue={price}
               />
             </Form.Group>
           </Col>

@@ -32,7 +32,11 @@ const Update = ({ setType, selectRef }) => {
                 options={clientOptions}
                 placeholder="Type name here..."
                 onChange={(e) => {
-                  if (e.length > 0) setClientId(e[0].id);
+                  if (e.length > 0) {
+                    setClientId(e[0].id);
+                    setName(e[0].first_name);
+                    setLastName(e[0].last_name);
+                  }
                 }}
               />
             </Form.Group>
@@ -49,6 +53,7 @@ const Update = ({ setType, selectRef }) => {
                 rows={1}
                 placeholder="Type the name here..."
                 onChange={(e) => setName(e.target.value)}
+                defaultValue={name}
               />
             </Form.Group>
           </Col>
@@ -60,6 +65,7 @@ const Update = ({ setType, selectRef }) => {
                 rows={1}
                 placeholder="Type the last name here..."
                 onChange={(e) => setLastName(e.target.value)}
+                defaultValue={lastName}
               />
             </Form.Group>
           </Col>

@@ -4,16 +4,27 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { useSelector } from "react-redux";
+import { Typeahead } from "react-bootstrap-typeahead";
+import { createProduct } from "../../store/slices/products/actions";
+import { useDispatch } from "react-redux";
 
 const Create = ({ setType, selectRef }) => {
+  const dispatch = useDispatch();
+  const total = useSelector((state) => state.products.total);
+  const id = total + 1;
+  const brandsOptions = useSelector((state) => state.brands.brands);
+
   const [name, setName] = useState("");
-  const [brandId, setBrandId] = useState("");
+  const [brand, setBrand] = useState("");
   const [price, setPrice] = useState(0);
 
   const sendNewProduct = () => {
+    dispatch(
+      createProduct({ id: id, nombre: name, marca: brand, precio: price })
+    ); //post new client
     setType(0);
     selectRef.current.setValue("");
-    console.log("sending...");
   };
 
   return (
@@ -34,11 +45,13 @@ const Create = ({ setType, selectRef }) => {
           <Col>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>New product's brand</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={1}
-                placeholder="Type the brand here..."
-                onChange={(e) => setBrandId(e.target.value)}
+              <Typeahead
+                id="brand"
+                options={brandsOptions}
+                placeholder="Type brand here..."
+                onChange={(e) => {
+                  if (e.length > 0) setBrand(e[0].nombre);
+                }}
               />
             </Form.Group>
           </Col>

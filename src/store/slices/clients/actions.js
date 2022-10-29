@@ -1,9 +1,5 @@
 import { clientsActions } from "./clients";
-
-const CLIENTS = [
-  { id: 1, first_name: "Abigail", last_name: "O'Flynn" },
-  { id: 2, first_name: "Marchall", last_name: "Chinery" },
-];
+import { getClients, postClient } from "../../../services/api.clients";
 
 const parseClients = (clients) => {
   return clients.map((client) => {
@@ -15,8 +11,34 @@ const parseClients = (clients) => {
 export const fetchClients = () => {
   return async (dispatch) => {
     try {
-      const clients = parseClients(CLIENTS);
+      let response;
+      response = await getClients(); // get Teams from API
+      if (!response.ok) throw new Error("Couldn't fetch clients data");
+      let clients = await response.json();
+
+      clients = parseClients(clients);
       dispatch(clientsActions.setClients(clients));
+      dispatch(clientsActions.setTotal(clients.length));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const createClient = (client) => {
+  return async (dispatch) => {
+    try {
+      let response;
+      response = await postClient(client);
+      if (!response.ok) throw new Error("Couldn't create new client");
+
+      response = await getClients();
+      if (!response.ok) throw new Error("Couldn't fetch clients data");
+      let clients = await response.json();
+
+      clients = parseClients(clients);
+      dispatch(clientsActions.setClients(clients)); //update clients
+      dispatch(clientsActions.setTotal(clients.length));
     } catch (error) {
       console.log(error);
     }
