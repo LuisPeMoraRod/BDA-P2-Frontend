@@ -37,10 +37,10 @@ const Update = ({ setType, selectRef }) => {
       <Container>
         <Row>
           <Col>
-            <Form.Group className="mb-3" controlId="client">
+            <Form.Group className="mb-3" controlId="product">
               <Form.Label>Select product to be updated</Form.Label>
               <Typeahead
-                id="client"
+                id="product"
                 options={productsOptions}
                 placeholder="Type product here..."
                 onChange={(e) => {
